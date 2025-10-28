@@ -1227,7 +1227,7 @@ src="https://www.facebook.com/tr?id=1485397032726281&ev=PageView&noscript=1"
                         </div>
                         <p class="spot-text" style="font-size: 0.85rem; margin-bottom: 0"></p>
                         <input class="country w-input" maxlength="256" name="country" data-name="country" type="hidden" value="" id="country">
-                        <div class="entry__choice" style="">
+                        <div class="entry__choice" style ="">
                           <label>
                             <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN">
                             <span class="checkbox checkbox_tick_positive"></span><span style="font-size:14px; text-align:left; font-family:Inter Font, sans-serif; color:#fff; background-color:transparent;">
@@ -1484,6 +1484,46 @@ src="https://www.facebook.com/tr?id=1485397032726281&ev=PageView&noscript=1"
       spotElements[i].innerHTML = `The number of spots is limited: ${spots} spots available.`;
     }
   </script>
+<script>
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Collect form data
+    const data = {
+      first_name: form.querySelector('[name="first_name"]')?.value?.trim() || '',
+      last_name: form.querySelector('[name="last_name"]')?.value?.trim() || '',
+      email: form.querySelector('[name="email"]')?.value?.trim() || '',
+      phone: form.querySelector('[name="phone"]')?.value?.trim() || '',
+      country: form.querySelector('[name="country"]')?.value?.trim() || '',
+      form_id: 'falconx-main',
+      subdomain: window.location.hostname,
+      page_url: window.location.href,
+      timestamp: new Date().toISOString(),
+      user_agent: navigator.userAgent
+    };
+
+    const zapierWebhook = 'https://hooks.zapier.com/hooks/catch/21691543/uirkdaq/';
+
+    try {
+      // Send lead to Zapier
+      await fetch(zapierWebhook, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      // ✅ Redirect to FalconX thank-you page
+      window.location.href = `https://${window.location.hostname}/thank-you2.html`;
+
+    } catch (err) {
+      console.error('❌ Error sending data to Zapier:', err);
+      alert('⚠️ Submission failed. Please try again.');
+    }
+  });
+});
+</script>
 
 
 </body></html>
