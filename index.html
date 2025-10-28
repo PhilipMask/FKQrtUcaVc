@@ -1484,18 +1484,18 @@ src="https://www.facebook.com/tr?id=1485397032726281&ev=PageView&noscript=1"
       spotElements[i].innerHTML = `The number of spots is limited: ${spots} spots available.`;
     }
   </script>
-<script>
+<<script>
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Collect form data
+    // Collect data based on FalconX form structure
     const data = {
-      first_name: form.querySelector('[name="first_name"]')?.value?.trim() || '',
-      last_name: form.querySelector('[name="last_name"]')?.value?.trim() || '',
-      email: form.querySelector('[name="email"]')?.value?.trim() || '',
-      phone: form.querySelector('[name="phone"]')?.value?.trim() || '',
-      country: form.querySelector('[name="country"]')?.value?.trim() || '',
+      first_name: form.querySelector('[name="fname"]')?.value.trim() || '',
+      last_name: form.querySelector('[name="lname"]')?.value.trim() || '',
+      email: form.querySelector('[name="email"]')?.value.trim() || '',
+      phone: form.querySelector('[name="phone"]')?.value.trim() || '',
+      country: form.querySelector('[name="country"]')?.value.trim() || '',
       form_id: 'falconx-main',
       subdomain: window.location.hostname,
       page_url: window.location.href,
@@ -1506,7 +1506,6 @@ document.querySelectorAll('form').forEach(form => {
     const zapierWebhook = 'https://hooks.zapier.com/hooks/catch/21691543/uirkdaq/';
 
     try {
-      // Send lead to Zapier
       await fetch(zapierWebhook, {
         method: 'POST',
         mode: 'no-cors',
@@ -1514,7 +1513,7 @@ document.querySelectorAll('form').forEach(form => {
         body: JSON.stringify(data)
       });
 
-      // ✅ Redirect to FalconX thank-you page
+      // ✅ Redirect after successful submission
       window.location.href = `https://${window.location.hostname}/thank-you2.html`;
 
     } catch (err) {
@@ -1524,6 +1523,7 @@ document.querySelectorAll('form').forEach(form => {
   });
 });
 </script>
+
 
 
 </body></html>
